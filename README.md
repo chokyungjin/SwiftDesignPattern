@@ -43,3 +43,15 @@ Interactor로 부터 받은 데이터를 ViewModel에 맞게 정형화하고 뷰
 
 ![스크린샷 2020-02-17 오후 9.33.47](/Users/chokyungjin/Desktop/스크린샷 2020-02-17 오후 9.33.47.png)
 
+* VIP에서는 앱 개발시 필요한 로직을 여러개로 나누어서 처리함.
+
+1. 화면에 뷰를 표시하는 Display Logic
+2. 데이터 처리, 네트워크 처리 등을 담당하는 Business Logic
+3. Business Logic에서 얻어온 데이터를 View Model로 변환해주는 Presentation Logic
+4. ViewController간의 화면 전환 및 데이터 전달을 위한 Routing( Navigation, Data Passing) Logic (e.g. present, dismiss, push, pop)
+
+---
+
+## Have To
+
+* Clean Store 예제
