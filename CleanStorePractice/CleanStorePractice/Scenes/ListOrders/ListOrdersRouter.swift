@@ -29,7 +29,7 @@ class ListOrdersRouter: NSObject, ListOrdersRoutingLogic, ListOrdersDataPassing
   var dataStore: ListOrdersDataStore?   //프로토콜 상속
   
   // MARK: Routing
-  
+  //create를 위한 segue
   func routeToCreateOrder(segue: UIStoryboardSegue?)
   {
     if let segue = segue {
@@ -43,7 +43,7 @@ class ListOrdersRouter: NSObject, ListOrdersRoutingLogic, ListOrdersDataPassing
       navigateToCreateOrder(source: viewController!, destination: destinationVC)    //ViewController
     }
   }
-  
+  //show를 위한 segue
   func routeToShowOrder(segue: UIStoryboardSegue?)
   {
     if let segue = segue {
@@ -59,7 +59,7 @@ class ListOrdersRouter: NSObject, ListOrdersRoutingLogic, ListOrdersDataPassing
   }
   
   // MARK: Navigation
-  
+  //이동시켜주는 함수
   func navigateToCreateOrder(source: ListOrdersViewController, destination: CreateOrderViewController)
   {
     source.show(destination, sender: nil)
@@ -82,6 +82,7 @@ class ListOrdersRouter: NSObject, ListOrdersRoutingLogic, ListOrdersDataPassing
   func passDataToShowOrder(source: ListOrdersDataStore, destination: inout ShowOrderDataStore)
   {
     let selectedRow = viewController?.tableView.indexPathForSelectedRow?.row
+    //선택된 row 값 전달
     destination.order = source.orders?[selectedRow!]
   }
 }

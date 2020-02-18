@@ -8,8 +8,12 @@
 
 * VIP: VIew, Interactor , Presenter
 * View : 뷰
-* interactor : 비즈니스 로직
+* Interactor : 비즈니스 로직
 * Presenter : UI를 위한 데이터 가공
+
+ViewController - Interactor - Presenter 사이클로 이루어져 있으며, ViewController 에서 버튼 클릭, 데이터 파싱 등의 요청이 발생하면 Interactor에서 그 부분을 처리하고 Presenter에서 그 결과를 화면에 그려줄 수 있도록 마지막 포맷팅 작업을 해준다.
+
+![스크린샷 2020-02-18 오후 2.19.05](/Users/chokyungjin/Desktop/스크린샷 2020-02-18 오후 2.19.05.png)
 
 ### Models 
 
@@ -50,8 +54,22 @@ Interactor로 부터 받은 데이터를 ViewModel에 맞게 정형화하고 뷰
 3. Business Logic에서 얻어온 데이터를 View Model로 변환해주는 Presentation Logic
 4. ViewController간의 화면 전환 및 데이터 전달을 위한 Routing( Navigation, Data Passing) Logic (e.g. present, dismiss, push, pop)
 
+* Scene은 화면 단위로 컴포넌트들을 구분시킨다.
+
+![스크린샷 2020-02-18 오후 2.19.50](/Users/chokyungjin/Desktop/스크린샷 2020-02-18 오후 2.19.50.png)
+
 ---
 
 ## Have To
 
 * Clean Store 예제
+
+
+
+---
+
+## Study
+
+> inout
+
+함수가 호출되고 종료될 때, 함수 내부에서 변경된 값은 함수 외부의 값에는 영향을 끼칠 수 없다. 하지만 함수 호출이 종료된 후에도 변경 사항을 유지해야할 경우, inout 파라미터를 사용 -> 참조 연산자라고 생각하자

@@ -14,7 +14,7 @@ import UIKit
 
 @objc protocol ShowOrderRoutingLogic
 {
-  //func routeToSomewhere(segue: UIStoryboardSegue?)
+  func routeToEditOrder(segue: UIStoryboardSegue?)
 }
 
 protocol ShowOrderDataPassing
@@ -29,32 +29,31 @@ class ShowOrderRouter: NSObject, ShowOrderRoutingLogic, ShowOrderDataPassing
   
   // MARK: Routing
   
-  //func routeToSomewhere(segue: UIStoryboardSegue?)
-  //{
-  //  if let segue = segue {
-  //    let destinationVC = segue.destination as! SomewhereViewController
-  //    var destinationDS = destinationVC.router!.dataStore!
-  //    passDataToSomewhere(source: dataStore!, destination: &destinationDS)
-  //  } else {
-  //    let storyboard = UIStoryboard(name: "Main", bundle: nil)
-  //    let destinationVC = storyboard.instantiateViewController(withIdentifier: "SomewhereViewController") as! SomewhereViewController
-  //    var destinationDS = destinationVC.router!.dataStore!
-  //    passDataToSomewhere(source: dataStore!, destination: &destinationDS)
-  //    navigateToSomewhere(source: viewController!, destination: destinationVC)
-  //  }
-  //}
-
+  func routeToEditOrder(segue: UIStoryboardSegue?)
+  {
+    if let segue = segue {
+      let destinationVC = segue.destination as! CreateOrderViewController
+      var destinationDS = destinationVC.router!.dataStore!
+      passDataToEditOrder(source: dataStore!, destination: &destinationDS)
+    } else {
+      let destinationVC = viewController?.storyboard?.instantiateViewController(withIdentifier: "CreateOrderViewController") as! CreateOrderViewController
+      var destinationDS = destinationVC.router!.dataStore!
+      passDataToEditOrder(source: dataStore!, destination: &destinationDS)
+      navigateToEditOrder(source: viewController!, destination: destinationVC)
+    }
+  }
+  
   // MARK: Navigation
   
-  //func navigateToSomewhere(source: ShowOrderViewController, destination: SomewhereViewController)
-  //{
-  //  source.show(destination, sender: nil)
-  //}
+  func navigateToEditOrder(source: ShowOrderViewController, destination: CreateOrderViewController)
+  {
+    source.show(destination, sender: nil)
+  }
   
   // MARK: Passing data
   
-  //func passDataToSomewhere(source: ShowOrderDataStore, destination: inout SomewhereDataStore)
-  //{
-  //  destination.name = source.name
-  //}
+  func passDataToEditOrder(source: ShowOrderDataStore, destination: inout CreateOrderDataStore)
+  {
+    destination.orderToEdit = source.order
+  }
 }

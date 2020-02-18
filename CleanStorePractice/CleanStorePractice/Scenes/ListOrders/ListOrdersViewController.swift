@@ -73,7 +73,7 @@ class ListOrdersViewController: UITableViewController, ListOrdersDisplayLogic
   }
   
   // MARK: - Fetch orders
-  
+  // displayedOrder 배열 초기화
   var displayedOrders: [ListOrders.FetchOrders.ViewModel.DisplayedOrder] = []
   
   func fetchOrders()
@@ -82,10 +82,11 @@ class ListOrdersViewController: UITableViewController, ListOrdersDisplayLogic
     interactor?.fetchOrders(request: request)
   }
   
+    // ListOrdersDisplayLogic protocol 상속 구현
   func displayFetchedOrders(viewModel: ListOrders.FetchOrders.ViewModel)
   {
-    displayedOrders = viewModel.displayedOrders
-    tableView.reloadData()
+    displayedOrders = viewModel.displayedOrders // viewModel의 DisplayedOrder의 배열을 삽입
+    tableView.reloadData()  //VC 화면 갱신
   }
   
   // MARK: - Table view data source

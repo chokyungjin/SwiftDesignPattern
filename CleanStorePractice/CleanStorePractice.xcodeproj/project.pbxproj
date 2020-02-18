@@ -239,12 +239,12 @@
 		395DC5AB23FBA39F005E0D93 /* ShowOrder */ = {
 			isa = PBXGroup;
 			children = (
-				395DC5D423FBA440005E0D93 /* ShowOrderPresenter.swift */,
-				395DC5D523FBA440005E0D93 /* ShowOrderWorker.swift */,
-				395DC5D623FBA440005E0D93 /* ShowOrderRouter.swift */,
-				395DC5D723FBA440005E0D93 /* ShowOrderModels.swift */,
 				395DC5D823FBA440005E0D93 /* ShowOrderViewController.swift */,
 				395DC5D923FBA440005E0D93 /* ShowOrderInteractor.swift */,
+				395DC5D423FBA440005E0D93 /* ShowOrderPresenter.swift */,
+				395DC5D723FBA440005E0D93 /* ShowOrderModels.swift */,
+				395DC5D523FBA440005E0D93 /* ShowOrderWorker.swift */,
+				395DC5D623FBA440005E0D93 /* ShowOrderRouter.swift */,
 			);
 			path = ShowOrder;
 			sourceTree = "<group>";
@@ -252,12 +252,12 @@
 		395DC5AC23FBA3A6005E0D93 /* CreateOrder */ = {
 			isa = PBXGroup;
 			children = (
-				395DC5C823FBA435005E0D93 /* CreateOrderPresenter.swift */,
-				395DC5C923FBA435005E0D93 /* CreateOrderWorker.swift */,
-				395DC5CA23FBA435005E0D93 /* CreateOrderRouter.swift */,
-				395DC5CB23FBA435005E0D93 /* CreateOrderModels.swift */,
 				395DC5CC23FBA435005E0D93 /* CreateOrderViewController.swift */,
 				395DC5CD23FBA435005E0D93 /* CreateOrderInteractor.swift */,
+				395DC5C823FBA435005E0D93 /* CreateOrderPresenter.swift */,
+				395DC5CB23FBA435005E0D93 /* CreateOrderModels.swift */,
+				395DC5C923FBA435005E0D93 /* CreateOrderWorker.swift */,
+				395DC5CA23FBA435005E0D93 /* CreateOrderRouter.swift */,
 			);
 			path = CreateOrder;
 			sourceTree = "<group>";
@@ -265,12 +265,12 @@
 		395DC5AD23FBA3AE005E0D93 /* ListOrders */ = {
 			isa = PBXGroup;
 			children = (
-				395DC5BC23FBA42A005E0D93 /* ListOrdersPresenter.swift */,
-				395DC5BD23FBA42A005E0D93 /* ListOrdersWorker.swift */,
-				395DC5BE23FBA42A005E0D93 /* ListOrdersRouter.swift */,
-				395DC5BF23FBA42A005E0D93 /* ListOrdersModels.swift */,
 				395DC5C023FBA42A005E0D93 /* ListOrdersViewController.swift */,
 				395DC5C123FBA42A005E0D93 /* ListOrdersInteractor.swift */,
+				395DC5BC23FBA42A005E0D93 /* ListOrdersPresenter.swift */,
+				395DC5BF23FBA42A005E0D93 /* ListOrdersModels.swift */,
+				395DC5BD23FBA42A005E0D93 /* ListOrdersWorker.swift */,
+				395DC5BE23FBA42A005E0D93 /* ListOrdersRouter.swift */,
 			);
 			path = ListOrders;
 			sourceTree = "<group>";

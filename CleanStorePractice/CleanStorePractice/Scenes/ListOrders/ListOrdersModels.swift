@@ -35,7 +35,7 @@ enum ListOrders
         var name: String
         var total: String
       }
-      var displayedOrders: [DisplayedOrder]
+      var displayedOrders: [DisplayedOrder] //구조체 배열
     }
   }
 }
