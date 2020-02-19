@@ -11,8 +11,8 @@
 //
 
 import UIKit
-
-protocol CreateOrderPresentationLogic
+// MARK: PresentationLogic
+protocol CreateOrderPresentationLogic   //Business logic에서 얻어온 데이터를 ViewModel로 변환
 {
   func presentExpirationDate(response: CreateOrder.FormatExpirationDate.Response)
   func presentCreatedOrder(response: CreateOrder.CreateOrder.Response)
@@ -32,7 +32,7 @@ class CreateOrderPresenter: CreateOrderPresentationLogic
   }()
   
   // MARK: - Expiration date
-  
+  //Response 데이터를 formatter에 맞춰서 ViewModel에 전달
   func presentExpirationDate(response: CreateOrder.FormatExpirationDate.Response)
   {
     let date = dateFormatter.string(from: response.date)
@@ -78,8 +78,8 @@ class CreateOrderPresenter: CreateOrderPresentationLogic
         id: orderToEdit.id,
         date: orderToEdit.date,
         total: orderToEdit.total
-      )
-    )
+      ) //orderFormFields
+    ) // viewModel
     viewController?.displayOrderToEdit(viewModel: viewModel)
   }
   

@@ -57,7 +57,8 @@ class ShowOrderViewController: UIViewController, ShowOrderDisplayLogic
     override func prepare(for segue: UIStoryboardSegue, sender: Any?)
     {
         if let scene = segue.identifier {
-            let selector = NSSelectorFromString("routeTo\(scene)WithSegue:")
+            let selector = NSSelectorFromString("routeTo\(scene)WithSegue:")    //routeToEditOrderWithSegue:
+            print(selector)
             if let router = router, router.responds(to: selector) {
                 router.perform(selector, with: segue)
             }
@@ -83,7 +84,7 @@ class ShowOrderViewController: UIViewController, ShowOrderDisplayLogic
     func getOrder()
     {
         let request = ShowOrder.GetOrder.Request()
-        interactor?.getOrder(request: request)
+        interactor?.getOrder(request: request)  //request - response - presenter
     }
     
     func displayOrder(viewModel: ShowOrder.GetOrder.ViewModel)

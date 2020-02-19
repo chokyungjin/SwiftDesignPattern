@@ -47,7 +47,7 @@ class ListOrdersPresenter: ListOrdersPresentationLogic
       let total = currencyFormatter.string(from: order.total)
       let displayedOrder = ListOrders.FetchOrders.ViewModel.DisplayedOrder(id: order.id!, date: date, email: order.email, name: "\(order.firstName) \(order.lastName)", total: total!)
       displayedOrders.append(displayedOrder)
-        print(displayedOrder)
+//        print(displayedOrder)
     }
     let viewModel = ListOrders.FetchOrders.ViewModel(displayedOrders: displayedOrders)
     viewController?.displayFetchedOrders(viewModel: viewModel)

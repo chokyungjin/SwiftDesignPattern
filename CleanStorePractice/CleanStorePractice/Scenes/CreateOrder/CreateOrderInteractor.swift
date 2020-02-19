@@ -12,6 +12,7 @@
 
 import UIKit
 
+//MARK: BusinessLogic Protocol
 protocol CreateOrderBusinessLogic
 {
   var shippingMethods: [String] { get }
@@ -39,9 +40,10 @@ class CreateOrderInteractor: CreateOrderBusinessLogic, CreateOrderDataStore
     ShipmentMethod(speed: .OneDay).toString(),
     ShipmentMethod(speed: .TwoDay).toString()
   ]
+//BusinessLogic protocol
   
   // MARK: - Expiration date
-  
+  // request받은걸 response로 바꾸어서 presenter에게 전달
   func formatExpirationDate(request: CreateOrder.FormatExpirationDate.Request)
   {
     let response = CreateOrder.FormatExpirationDate.Response(date: request.date)

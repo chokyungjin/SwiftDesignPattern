@@ -814,6 +814,7 @@
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                     <connections>
                         <outlet property="dataSource" destination="X7x-8t-IVP" id="mXM-2g-rpB"/>
+                        <outlet property="delegate" destination="X7x-8t-IVP" id="7j6-Wl-ZhB"/>
                     </connections>
                 </pickerView>
                 <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="dateAndTime" minuteInterval="1" id="GY4-Jy-7aX">

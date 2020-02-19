@@ -43,6 +43,7 @@ class ShowOrderPresenter: ShowOrderPresentationLogic
     let date = dateFormatter.string(from: order.date)
     let total = currencyFormatter.string(from: order.total)!
     let displayedOrder = ShowOrder.GetOrder.ViewModel.DisplayedOrder(id: order.id!, date: date, email: order.email, name: "\(order.firstName) \(order.lastName)", total: total)
+    //이것도 포매팅의 일종인가
     
     let viewModel = ShowOrder.GetOrder.ViewModel(displayedOrder: displayedOrder)
     viewController?.displayOrder(viewModel: viewModel)

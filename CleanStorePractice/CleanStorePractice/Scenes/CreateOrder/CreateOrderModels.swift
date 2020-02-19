@@ -48,7 +48,7 @@ enum CreateOrder
     var id: String?
     var date: Date
     var total: NSDecimalNumber
-  }
+  } //OrderFormFields
 
   // MARK: Use cases
   
