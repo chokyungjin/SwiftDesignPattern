@@ -12,11 +12,11 @@
 
 import UIKit
 
+ // MARK: ListOrders 화면 안에 쓰이는 모델들을 정의
 enum ListOrders
 {
   // MARK: Use cases
-  
-  enum FetchOrders
+  enum FetchOrders // 여기서의 enum들이 전부 Use case 이다.
   {
     struct Request  //API에 보내는데 필요한 Param
     {

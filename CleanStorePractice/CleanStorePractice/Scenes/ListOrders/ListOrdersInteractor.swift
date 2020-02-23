@@ -11,7 +11,7 @@
 //
 
 import UIKit
-
+// 데이터 처리, 네트워크 처리 등을 담당하는 Business Logic
 protocol ListOrdersBusinessLogic
 {
   func fetchOrders(request: ListOrders.FetchOrders.Request)
@@ -27,7 +27,7 @@ class ListOrdersInteractor: ListOrdersBusinessLogic, ListOrdersDataStore
   var presenter: ListOrdersPresentationLogic?
   //Workers를 통해 데이터 전달!
   var ordersWorker = OrdersWorker(ordersStore: OrdersMemStore())
-  var orders: [Order]?
+  var orders: [Order]? //protocol 만족
   
   // MARK: - Fetch orders
   
