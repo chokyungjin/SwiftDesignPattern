@@ -24,9 +24,8 @@ protocol ListOrdersDataStore
 
 class ListOrdersInteractor: ListOrdersBusinessLogic, ListOrdersDataStore
 {
-  var presenter: ListOrdersPresentationLogic?
-  //Workers를 통해 데이터 전달!
-  var ordersWorker = OrdersWorker(ordersStore: OrdersMemStore())
+  var presenter: ListOrdersPresentationLogic?   // presenter로 주고받은 데이터 전달
+  var ordersWorker = OrdersWorker(ordersStore: OrdersMemStore()) //Workers를 통해 데이터 주고받음!
   var orders: [Order]? //protocol 만족
   
   // MARK: - Fetch orders

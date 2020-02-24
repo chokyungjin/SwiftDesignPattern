@@ -82,6 +82,27 @@ nib 파일을 읽어들이는 과정은 파일로부터 직렬화된 데이터�
 
 이 과정에서 얼려져있던 객체들이 온전한 인스턴스로 복원되며, 이를 위해서 모든 객체들은 `init(coder:)` 메시지를 받게 된다.
 
+> [weak self]
+
+#### [weak self]
+
+* self 사용시 retain count를 증가시키게 되는데 closure가 self를 해제하여 retain count를 낮춰준다면 문제없지만, 다른 클래스 프로퍼티에 붙잡혀 있다면 문제가 발생
+* closure는 self가 해제 될 때까지, self는 closure가 해제될 때까지 기다리는 강한 참조 cycle 상황을 만듦.
+* closure의 선언부에 `[weak self] param in`을 명시해주고 self가 사용되는 곳에 self를 **optional**로 사용해주면 strong reference cycle 상황을 피해 갈 수 있게 된다. 
+* strong reference cycle이 발생하는지 사전에 알기 어렵기 때문에 만약 closure 내부에서 self를 사용하게 된다면 `[weak self] param in`을 항상 먼저 명시해주는 습관을 기르면 더 좋지 않을까 싶다.
+
+```swift
+disposable = producer.startWithNext { [weak self] number in 
+                                     self?.total += number 
+                                     print(self?.total) 
+                                    }
+```
+
+> Equatable
+
+* 구조체 , 클래스, enum 타입끼리 비교가 힘들 때, 채택하여 서로 비교하게 만들어줌!
+* 대신 ==연산자를 재정의 해줘야함.
+
 ---
 
 1. Clean Architecture
