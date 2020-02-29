@@ -103,9 +103,7 @@ disposable = producer.startWithNext { [weak self] number in
 * 구조체 , 클래스, enum 타입끼리 비교가 힘들 때, 채택하여 서로 비교하게 만들어줌!
 * 대신 ==연산자를 재정의 해줘야함.
 
----
-
-1. Clean Architecture
+> Clean Architecture
 
 유지보수 및 테스트하기 용이한 코드를 작성하기 위해 고안된 아키텍쳐. 크게 4개의 layer로 구성
 
@@ -132,6 +130,129 @@ Controller가 이 layer에 위치하며, interface layer는 business logic만을
 #### Domain
 
 Domain layer는 실제 DB에 담기는 데이터의 model과 1대1로 mapping되는 entity 객체를 담는 곳이다. 엔티티는 사용자가 실제로 생각하는 개념의 단위
+
+> Core Data
+
+iOS에서 DB를 조금 더 손쉽게 사용할 수 있도록 하는 방법
+
+SQLite를 직접적으로 사용하지 않은 상태에서 접근 가능하게 해준다.
+
+코어 데이터를 iOS의 또 다른 데이터베이스로 생각할 수 있지만 코어 데이터는 DB가 아니다.
+
+##### xcdatamodeld - 코어 데이터에서 엔티티 설계를 할 수 있는 파일
+
+코어 데이터 사용 옵션을 체크하면 AppDelegate.swift 에 다음과 같은 코어 데이트 구문이 추가된다.
+
+```	swift
+lazy var persistentContainer: NSPersistentContainer = {
+        /*
+         The persistent container for the application. This implementation
+         creates and returns a container, having loaded the store for the
+         application to it. This property is optional since there are legitimate
+         error conditions that could cause the creation of the store to fail.
+        */
+        let container = NSPersistentContainer(name: "CleanStorePractice")
+  //이 부분은 xcdatamodeld 파일을 코어 데이터 시스템에 등록하고 NSPersistentContainer 객체를 생성하는 역할을 하는데 xcdatamodeld 파일명을 변경하려고 할 때 위의 구문도 파일명과 동일하게 변경해야 한다.
+
+        container.loadPersistentStores(completionHandler: { (storeDescription, error) in
+            if let error = error as NSError? {
+                // Replace this implementation with code to handle the error appropriately.
+                // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
+                 
+                /*
+                 Typical reasons for an error here include:
+                 * The parent directory does not exist, cannot be created, or disallows writing.
+                 * The persistent store is not accessible, due to permissions or data protection when the device is locked.
+                 * The device is out of space.
+                 * The store could not be migrated to the current model version.
+                 Check the error message to determine what the actual problem was.
+                 */
+                fatalError("Unresolved error \(error), \(error.userInfo)")
+            }
+        })
+        return container
+    }()
+// MARK: - Core Data Saving support
+
+    func saveContext () {
+        let context = persistentContainer.viewContext
+      //이 부분은 코어 데이터에서 데이터를 읽고 쓰기 위해 사용하는 컨텍스트 객체를persistentContainer.viewContext 속성을 통해 참조한다.
+        if context.hasChanges {
+            do {
+                try context.save()
+            } catch {
+                // Replace this implementation with code to handle the error appropriately.
+                // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
+                let nserror = error as NSError
+                fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
+            }
+        }
+    }
+```
+
+let context = persistentContainer.viewContext 이 구문으로 반환되는 값은 NSManagedObjectContext 객체이다.
+
+관리 객체 컨텍스트라고 하며 코어 데이터에서 데이터를 저장하기 위해 사용되는 인스턴스인 관리 객체를 담고 생성하고 삭제하는 기능을 담당한다.
+
+관리 객체는 데이터베이스에서 테이블의 행이나 레코드에 해당한다. 레코드를 구성하는 각 칼럼은 관리 객체의 속성이 된다.
+
+모든 관리 객체는 컨텍스트에 담겨 관리되며 컨텍스트를 통해 새로운 관리 객체를 생성하거나 기존 관리 객체를 삭제할 수 있다.
+
+컨텍스트에 담긴 모든 관리 객체를 영구 저장소로 보내어 저장할 수도 있다.
+
+#### NSPersistentStore (영구 저장소)
+
+데이터를 저장하는 파일을 나타낸다.
+
+앱에서 코어데이터를 이용하도록 설정할 때 영구 저장소의 이름, 위치, 타입을 지정해야 한다.
+
+#### NSPersistentStoreCoordinator (영구 저장소 관리자)
+
+객체의 데이터를 실제로 저장하고 있는 실제 파일과 앱이 사용하는 객체 모델 사이를 중개한다.
+
+앱은 NSPersistentStoreCoordinator에 직접 접근할 일이 거의 없다.
+
+단지 코어 데이터 실행 환경을 구성할 때 관리자 객체를 생성만 해주면 된다.
+
+NSPersistentStoreCoordinator 는 하나 이상의 영구 저장소와의 통신을 관리하기 때문에 데이터가 어떻게 저장되는지를 앱으로부터 감춘다.
+
+#### NSManagedObjectContext (관리 객체 컨텍스트)
+
+관리 객체가 존재하는 영역.
+
+앱에서는 관리 객체의 생성, 삭제, 편집, 질의 등을 수행하기 위해 NSManagedObjectContext와 통신한다.
+
+NSManagedObjectContext는 객체들의 변경사항을 관리하며 모든 변경사항을 한꺼번에 저장하거나 경우에 따라서는 rollback 한다.
+
+전체 데이터 작업을 분리하거나 제한하기 위해 하나 이상의 context를 동시에 사용할 수 있다.
+
+#### NSManagedObjectModel (관리 객체 모델)
+
+관리 객체는 관리 객체 모델 (NSManagedObjectModel) 에서 정의한다.
+
+NSManagedObjectModel은 개체(Entity)의 리스트, 각 개체와 연결된 속성 리스트(properties), 각 개체 및 속성과 연결된 유효성 검증, 개체 간의 관계를 포함한다.
+
+관리 객체 모델은 주로 Xcode의 데이터 모델 편집기를 이용해 생성한다.
+
+#### NSManagedObject (관리 객체)
+
+코어 데이터 상에서 실제 정보를 담고있는 객체를 의미한다.
+
+관리 객체를 키와 그 키에 대응하는 타입의 객체를 가진 Dictonary 객체처럼 생각할 수 있다.
+
+<img width="650" alt="스크린샷 2020-02-28 오후 5 06 46" src="https://user-images.githubusercontent.com/46750574/75522230-d6718680-5a4c-11ea-922f-48b5f27b7b6e.png">
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

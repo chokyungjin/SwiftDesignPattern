@@ -12,14 +12,16 @@
 
 import UIKit
 
+//MARK: Define Display Protocol
 protocol ListOrdersDisplayLogic: class
 {
+    // viewModel 변환은 PresentationLogic
   func displayFetchedOrders(viewModel: ListOrders.FetchOrders.ViewModel)
 }
 
 class ListOrdersViewController: UITableViewController, ListOrdersDisplayLogic
 {
-  var interactor: ListOrdersBusinessLogic?
+  var interactor: ListOrdersBusinessLogic? // ListOrdersBusinessLogic에서 fetchOrders 함수
   var router: (NSObjectProtocol & ListOrdersRoutingLogic & ListOrdersDataPassing)?
 
   // MARK: Object lifecycle
@@ -44,9 +46,9 @@ class ListOrdersViewController: UITableViewController, ListOrdersDisplayLogic
     let interactor = ListOrdersInteractor()
     let presenter = ListOrdersPresenter()
     let router = ListOrdersRouter()
-    viewController.interactor = interactor
-    viewController.router = router
-    interactor.presenter = presenter
+    viewController.interactor = interactor //let interactor = ListOrdersInteractor()
+    viewController.router = router //let router = ListOrdersRouter()
+    interactor.presenter = presenter //let presenter = ListOrdersPresenter()
     presenter.viewController = viewController
     router.viewController = viewController
     router.dataStore = interactor
@@ -82,12 +84,13 @@ class ListOrdersViewController: UITableViewController, ListOrdersDisplayLogic
   {
     let request = ListOrders.FetchOrders.Request()
     interactor?.fetchOrders(request: request)
+    //VC가 Model에게 Request. Request는 interactor에서 처리
   }
   
     // ListOrdersDisplayLogic protocol 상속 구현
   func displayFetchedOrders(viewModel: ListOrders.FetchOrders.ViewModel)
   {
-    displayedOrders = viewModel.displayedOrders // viewModel의 DisplayedOrder의 배열을 삽입
+    displayedOrders = viewModel.displayedOrders // viewModel의 displayedOrders 삽입
     tableView.reloadData()  //VC 화면 갱신
   }
   

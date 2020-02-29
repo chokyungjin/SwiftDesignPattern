@@ -14,43 +14,45 @@ import UIKit
 //PresentationLogic = Bussiness Logic 에서 얻어온 데이터를 View Model로 변환
 protocol ListOrdersPresentationLogic
 {
-  func presentFetchedOrders(response: ListOrders.FetchOrders.Response)
+    func presentFetchedOrders(response: ListOrders.FetchOrders.Response)
     // present protocol, response로 받아온걸로!
 }
 
 class ListOrdersPresenter: ListOrdersPresentationLogic
 {
-  weak var viewController: ListOrdersDisplayLogic?  //여기서 weak으로 꼭 선언해줘야함!
-  
-  let dateFormatter: DateFormatter = {
-    let dateFormatter = DateFormatter()
-    dateFormatter.dateStyle = .short
-    dateFormatter.timeStyle = .none
-    return dateFormatter
-  }()
+    weak var viewController: ListOrdersDisplayLogic?  //여기서 weak으로 꼭 선언해줘야함!
+    
+    let dateFormatter: DateFormatter = {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateStyle = .short
+        dateFormatter.timeStyle = .none
+        return dateFormatter
+    }()
     //date Formatter 객체 만들기
-  
-  let currencyFormatter: NumberFormatter = {
-    let currencyFormatter = NumberFormatter()
-    currencyFormatter.numberStyle = .currency
-    return currencyFormatter
-  }()
-  //currency Formatter 객체 만들기
-
-  // MARK: - Fetch orders
-  // response = var orders: [Order] 로 구성!
-  func presentFetchedOrders(response: ListOrders.FetchOrders.Response)
-  {
-    var displayedOrders: [ListOrders.FetchOrders.ViewModel.DisplayedOrder] = []
-    for order in response.orders {
-      let date = dateFormatter.string(from: order.date)
-      let total = currencyFormatter.string(from: order.total)
-      let displayedOrder = ListOrders.FetchOrders.ViewModel.DisplayedOrder(id: order.id!, date: date, email: order.email, name: "\(order.firstName) \(order.lastName)", total: total!)
-      displayedOrders.append(displayedOrder)
-//        print(displayedOrder)
+    
+    let currencyFormatter: NumberFormatter = {
+        let currencyFormatter = NumberFormatter()
+        currencyFormatter.numberStyle = .currency
+        return currencyFormatter
+    }()
+    //currency Formatter 객체 만들기
+    
+    // MARK: - Fetch orders
+    // response = var orders: [Order] 로 구성!
+    // presenter로 viewModel에 맞게 변환해주고 VC에 전달
+    func presentFetchedOrders(response: ListOrders.FetchOrders.Response)
+    {
+        var displayedOrders: [ListOrders.FetchOrders.ViewModel.DisplayedOrder] = []
+        for order in response.orders {
+            let date = dateFormatter.string(from: order.date)
+            let total = currencyFormatter.string(from: order.total)
+            let displayedOrder = ListOrders.FetchOrders.ViewModel.DisplayedOrder(id: order.id!, date: date, email: order.email, name: "\(order.firstName) \(order.lastName)", total: total!)
+            // ListOrders 
+            displayedOrders.append(displayedOrder)
+            // print(displayedOrder)
+        }
+        let viewModel = ListOrders.FetchOrders.ViewModel(displayedOrders: displayedOrders)
+        viewController?.displayFetchedOrders(viewModel: viewModel)
+        
     }
-    let viewModel = ListOrders.FetchOrders.ViewModel(displayedOrders: displayedOrders)
-    viewController?.displayFetchedOrders(viewModel: viewModel)
-    //VC에게 전달!
-  }
 }

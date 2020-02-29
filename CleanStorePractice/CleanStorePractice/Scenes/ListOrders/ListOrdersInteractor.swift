@@ -14,28 +14,33 @@ import UIKit
 // 데이터 처리, 네트워크 처리 등을 담당하는 Business Logic
 protocol ListOrdersBusinessLogic
 {
-  func fetchOrders(request: ListOrders.FetchOrders.Request)
+    func fetchOrders(request: ListOrders.FetchOrders.Request)
 }
 // 이런식으로 protocol을 선언하면 프로토콜을 상속하는 클래스는 해당하는 변수를 무조건 선언해줘야함 , 이름도 같아야함!
 protocol ListOrdersDataStore
 {
-  var orders: [Order]? { get }
+    var orders: [Order]? { get }
 }
 
 class ListOrdersInteractor: ListOrdersBusinessLogic, ListOrdersDataStore
 {
-  var presenter: ListOrdersPresentationLogic?   // presenter로 주고받은 데이터 전달
-  var ordersWorker = OrdersWorker(ordersStore: OrdersMemStore()) //Workers를 통해 데이터 주고받음!
-  var orders: [Order]? //protocol 만족
-  
-  // MARK: - Fetch orders
-  
-  func fetchOrders(request: ListOrders.FetchOrders.Request)
-  {
-    ordersWorker.fetchOrders { (orders) -> Void in
-      self.orders = orders
-      let response = ListOrders.FetchOrders.Response(orders: orders)
-      self.presenter?.presentFetchedOrders(response: response)
+    var presenter: ListOrdersPresentationLogic?   // presenter로 주고받은 데이터 전달
+    var ordersWorker = OrdersWorker(ordersStore: OrdersMemStore()) // Worker 객체 생성
+    var orders: [Order]? //protocol 만족
+    
+    // MARK: - Fetch orders
+    
+    func fetchOrders(request: ListOrders.FetchOrders.Request)
+    {
+        // interactor 가  Worker에게 요청
+        // Workers를 통해 데이터 주고받음!
+        ordersWorker.fetchOrders { (orders) -> Void in
+            self.orders = orders
+            let response = ListOrders.FetchOrders.Response(orders: orders)    // Worker의 Model response
+            // rseponse는 [Order]
+            self.presenter?.presentFetchedOrders(response: response) 
+            // presenter에게 response 값 전달
+            
+        }
     }
-  }
 }
